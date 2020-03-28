@@ -19,7 +19,7 @@ terminal shell of my choice: fish. To recap:
 - fish (you can adapt the script to be bash or Windows compatible)
 
 *** Homebrew Dependencies
-I'm using Homebrew to install `cmake` and `ninja`, which are build
+I'm using Homebrew to install =cmake= and =ninja=, which are build
 tools for C-compilers. These steps are excluded from the build script
 and are assumed to be installed beforehand (along with the other stuff
 I mentioned above).
