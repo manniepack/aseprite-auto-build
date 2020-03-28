@@ -10,20 +10,37 @@ exact ecosystem, so let me showcase what I am using:
 I am running macOS Catalina (10.15.X), and I'm running the Homebrew
 package manager. macOS comes with a default installation of Python
 (version 2) and Git, both of which are required for the
-script. Finally, the script itself is written as a function for the
-terminal shell of my choice: fish. To recap:
+script. Aseprite needs C++ compilers to function properly, and I'm
+using Xcode developer tools to make them available on macOS. Finally,
+the script itself is written as a function for the terminal shell of
+my choice: fish. To recap:
 
 - macOS Catalina (might work with others)
 - Homebrew (can install dependencies yourself if you'd like)
 - Python2, Git (can be manually installed if missing, or via Homebrew)
 - fish (you can adapt the script to be bash or Windows compatible)
 
-*** Homebrew Dependencies
+** Homebrew Dependencies
 I'm using Homebrew to install =cmake= and =ninja=, which are build
 tools for C-compilers. These steps are excluded from the build script
 and are assumed to be installed beforehand (along with the other stuff
 I mentioned above).
 
-#+BEGIN_SRC bash
+#+BEGIN_SRC fish
 brew install cmake ninja
 #+END_SRC
+
+* Usage: Build Aseprite
+| Step     | Command                                                              | Effect                                     |
+|----------+----------------------------------------------------------------------+--------------------------------------------|
+| 1. Clone | =git clone https://github.com/we-are-Mannie/aseprite-auto-build.git= | Download a local of this script repository |
+| 2. Build | =fish build.fish=                                                    | Run =build.fish= script using Fish         |
+
+The built Aseprite binaries and executable files will be output at the
+location =./build/aseprite/build/bin=. The important files are the
+=./aseprite= executable file and the =./data= folder.
+
+** Update
+Rerun the build command to clean previously generated, built files and
+then rebuild Aseprite. The updated files will replace the old ones in
+the output directories mentioned previously.
