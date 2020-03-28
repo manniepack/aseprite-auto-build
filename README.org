@@ -31,10 +31,10 @@ brew install cmake ninja
 #+END_SRC
 
 * Usage: Build Aseprite
-|   | Step  | Command                                                              | Effect                                                            |   |   |
-|---+-------+----------------------------------------------------------------------+-------------------------------------------------------------------+---+---|
-| 1 | Clone | =git clone https://github.com/we-are-Mannie/aseprite-auto-build.git= | Download a local of this script repository                        |   |   |
-| 2 | Build | =fish build.fish=                                                    | (Optionally clean, then) Download dependencies and build Aseprite |   |   |
+|   | Step  | Command                                                              | Effect                                                            |
+|---+-------+----------------------------------------------------------------------+-------------------------------------------------------------------|
+| 1 | Clone | =git clone https://github.com/we-are-Mannie/aseprite-auto-build.git= | Download a local of this script repository                        |
+| 2 | Build | =fish build.fish=                                                    | (Optionally clean, then) Download dependencies and build Aseprite |
 
 The built Aseprite binaries and executable files will be output at the
 location =./build/aseprite/build/bin=. The important files are the
