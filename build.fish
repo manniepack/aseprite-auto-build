@@ -1,34 +1,46 @@
-git clone --depth=1 https://github.com/aseprite/aseprite.git
-cd aseprite
-git checkout (git describe --tags (git rev-list --tags --max-count=1))
+#!/usr/bin/env fish
 
-brew install ninja cmake
+# Ensure build folder exists
+if not test -d ./build
+   mkdir ./build
+end
+cd ./build
 
-mkdir deps
-cd deps
+# Ensure Skia exists
+if test -d ./skia
+   rm -r ./skia
+end
+curl -Lo skia.zip "https://github.com/aseprite/skia/releases/download/m81-b607b32047/Skia-macOS-Release-x64.zip"
+unzip skia.zip -d skia
+rm skia.zip
 
-git clone "https://chromium.googlesource.com/chromium/tools/depot_tools.git"
-set PATH $PWD/depot_tools $PATH
+# Ensure Aseprite src exists
+if not test -d ./aseprite
+    git clone --recursive https://github.com/aseprite/aseprite.git
 
-git clone --depth=1 -b aseprite-m71 https://github.com/aseprite/skia.git
-cd skia
-python ./tools/git-sync-deps
-gn gen out/Release --args="is_official_build=true skia_use_system_expat=false skia_use_system_icu=false skia_use_libjpeg_turbo=false skia_use_system_libpng=false skia_use_libwebp=false skia_use_system_zlib=false extra_cflags_cc=[\"-frtti\"]"
-ninja -C out/Release skia
-cd ../..
+    cd ./aseprite
+    git checkout (git describe --tags (git rev-list --tags --max-count=1))
+    git submodule update --init --recursive
+else
+    cd ./aseprite
+    git pull
+end
 
-mkdir build
-cd build
+# Configure and build Aseprite
+if not test -d ./build
+    mkdir ./build
+else
+    rm -r ./build/*
+end
+cd ./build
 cmake \
   -DCMAKE_BUILD_TYPE=RelWithDebInfo \
   -DCMAKE_OSX_ARCHITECTURES=x86_64 \
   -DCMAKE_OSX_DEPLOYMENT_TARGET=10.15 \
   -DCMAKE_OSX_SYSROOT=/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk \
   -DLAF_OS_BACKEND=skia \
-  -DSKIA_DIR=~/Software/aseprite/deps/skia \
-  -DSKIA_OUT_DIR=~/Software/aseprite/deps/skia/out/Release \
+  -DSKIA_DIR=(realpath (string join / (pwd) "../../skia")) \
+  -DSKIA_LIBRARY_DIR=(realpath (string join / (pwd) "../../skia/out/Release-x64")) \
   -G Ninja \
   ..
 ninja aseprite
-
-bin/aseprite
