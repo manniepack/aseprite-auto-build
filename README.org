@@ -1,0 +1,29 @@
+#+TITLE: Aseprite Auto-Build
+#+OPTIONS: toc:nil
+#+OPTIONS: num:nil
+
+* System Assumptions
+This script was built by me, for the purpose of building Aseprite from
+scratch on my system. This would not be useful if you don't have the
+exact ecosystem, so let me showcase what I am using:
+
+I am running macOS Catalina (10.15.X), and I'm running the Homebrew
+package manager. macOS comes with a default installation of Python
+(version 2) and Git, both of which are required for the
+script. Finally, the script itself is written as a function for the
+terminal shell of my choice: fish. To recap:
+
+- macOS Catalina (might work with others)
+- Homebrew (can install dependencies yourself if you'd like)
+- Python2, Git (can be manually installed if missing, or via Homebrew)
+- fish (you can adapt the script to be bash or Windows compatible)
+
+*** Homebrew Dependencies
+I'm using Homebrew to install `cmake` and `ninja`, which are build
+tools for C-compilers. These steps are excluded from the build script
+and are assumed to be installed beforehand (along with the other stuff
+I mentioned above).
+
+#+BEGIN_SRC bash
+brew install cmake ninja
+#+END_SRC
